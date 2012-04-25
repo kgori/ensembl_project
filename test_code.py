@@ -103,3 +103,91 @@ wst.print_count()
 std.add_gene_tree(gtd)
 std.print_count()
 
+
+compara='''<?xml version="1.0" encoding="UTF-8"?>
+
+<phyloxml xsi:schemaLocation="http://www.phyloxml.org http://www.phyloxml.org/1.10/phyloxml.xsd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.phyloxml.org">
+  <phylogeny rooted="true" type="gene tree">
+    <clade branch_length="0">
+      <taxonomy>
+        <id>8825</id>
+        <scientific_name>Neognathae</scientific_name>
+      </taxonomy>
+      <events>
+        <type>speciation_or_duplication</type>
+        <duplications>1</duplications>
+      </events>
+      <clade branch_length="0.201069">
+        <confidence type="bootstrap">100</confidence>
+        <taxonomy>
+          <id>8825</id>
+          <scientific_name>Neognathae</scientific_name>
+        </taxonomy>
+        <clade branch_length="0.131443">
+          <name>ENSTGUG00000008715</name>
+          <taxonomy>
+            <id>59729</id>
+            <scientific_name>Taeniopygia guttata</scientific_name>
+          </taxonomy>
+          <sequence>
+            <accession source="compara">ENSTGUP00000008972</accession>
+            <name>XP_002189097.1</name>
+            <location>4:47812081-47812455</location>
+          </sequence>
+          <property datatype="xsd:string" ref="Compara:genome_db_name" applies_to="clade">taeniopygia_guttata</property>
+        </clade>
+        <clade branch_length="0.19984">
+          <name>ENSGALG00000014269</name>
+          <taxonomy>
+            <id>9031</id>
+            <scientific_name>Gallus gallus</scientific_name>
+          </taxonomy>
+          <sequence>
+            <accession source="compara">ENSGALP00000023038</accession>
+            <location>4:70888926-70889568</location>
+          </sequence>
+          <property datatype="xsd:string" ref="Compara:genome_db_name" applies_to="clade">gallus_gallus</property>
+        </clade>
+      </clade>
+      <clade branch_length="0.246044">
+        <confidence type="bootstrap">100</confidence>
+        <taxonomy>
+          <id>8825</id>
+          <scientific_name>Neognathae</scientific_name>
+        </taxonomy>
+        <clade branch_length="0.154865">
+          <name>ENSGALG00000014271</name>
+          <taxonomy>
+            <id>9031</id>
+            <scientific_name>Gallus gallus</scientific_name>
+          </taxonomy>
+          <sequence>
+            <accession source="compara">ENSGALP00000023040</accession>
+            <location>4:70892244-70893003</location>
+          </sequence>
+          <property datatype="xsd:string" ref="Compara:genome_db_name" applies_to="clade">gallus_gallus</property>
+        </clade>
+        <clade branch_length="0.096538">
+          <name>ENSTGUG00000008716</name>
+          <taxonomy>
+            <id>59729</id>
+            <scientific_name>Taeniopygia guttata</scientific_name>
+          </taxonomy>
+          <sequence>
+            <accession source="compara">ENSTGUP00000008973</accession>
+            <name>XP_002189129.1</name>
+            <location>4:47815598-47816188</location>
+          </sequence>
+          <property datatype="xsd:string" ref="Compara:genome_db_name" applies_to="clade">taeniopygia_guttata</property>
+        </clade>
+      </clade>
+    </clade>
+  </phylogeny>
+</phyloxml>
+'''
+cgt=ete2.phyloxmlTree(compara)
+for node in cgt.traverse():
+    if node.children:
+        print node.name
+cgt.show()
+
