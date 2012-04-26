@@ -3,15 +3,38 @@
 import ete2, re
 
 class Gene_Tree(ete2.PhyloTree):
+    
+    def display(self):
+        for n in self.traverse():
+            print n.type(),
+            nstyle = ete2.NodeStyle()
+            if n.type()=="Y":
+                nstyle["fgcolor"]="red"
+                nstyle["size"]=8
+                print "red"
+            elif n.type()=="N":
+                nstyle["fgcolor"]="blue"
+                nstyle["size"]=8
+                print "blue"
+            else: 
+                nstyle["fgcolor"]="lightblue"
+                print "lightblue"
+            n.set_style(nstyle)
+        self.show()
+
     def parse_species_name(self):
         if not self.children:
             return re.compile("(?<=_)[\w]+(?=_)").search(self.name).group()
         
     def type(self):
-        if hasattr(self,'t'): return self.t
+        if hasattr(self,'D'): return self.D
         else: return 'L'
 
     def get_species(self):
+        """
+        Generator to get species names from leaf nodes using regular expression defined in
+        parse_species_name function
+        """
         for x in self.iter_leaves():
             yield x.parse_species_name()
 
@@ -32,11 +55,13 @@ class Species_Tree(ete2.PhyloTree):
         """
         for node in self.traverse('postorder'):
             if node.children:
-                if sum([1 if child.count>0 else 0 for child in node.children]): # evaluates to true iff at least one child has score > 0
+                if sum([1 if child._tracker!=0 else 0 for child in node.children]): # evaluates to true iff at least one child has gained score > 0
                     node._add(amount)
+                    for child in node.children: child._tracker=0
             else:
                 if set([node.name]) & species_set:
                     node._add(amount)
+                    node._tracker=1
 
     def _initialise(self,gene_tree):
         """
@@ -71,6 +96,40 @@ class Species_Tree(ete2.PhyloTree):
                 else: 
                     union_tree = self.get_leaves_by_name(list(union)[0])[0]
                 union_tree._apply_counts_backwards(union,-1)
+
+    def display(self):
+        for n in self.traverse():
+            n.add_face(ete2.TextFace(n.count),column=0,position="branch-top")
+        self.show()
+
+    def display_with_gene_tree(self,gene_tree):
+        for n in self.traverse():
+            n.add_face(ete2.TextFace(n.count),column=0,position="branch-top")
+        for n in gene_tree.traverse():
+            nstyle = ete2.NodeStyle()
+            if n.type()=="Y":
+                nstyle["fgcolor"]="red"
+                nstyle["size"]=8
+                print "red"
+            elif n.type()=="N":
+                nstyle["fgcolor"]="blue"
+                nstyle["size"]=8
+                print "blue"
+            else: 
+                nstyle["fgcolor"]="lightblue"
+                print "lightblue"
+            n.set_style(nstyle)
+
+        
+        def layout(node):
+            species_ts = ete2.TreeStyle()
+            species_ts.scale=60
+            if not node.up:
+                ete2.faces.add_face_to_node(ete2.TreeFace(self,species_ts),node,0,position="branch-top")
+
+        ts = ete2.TreeStyle()
+        ts.layout_fn=layout
+        gene_tree.show(tree_style=ts)
 
     def print_count(self):
         for node in self.traverse('postorder'):
