@@ -10,6 +10,7 @@ except ImportError:
 else:
     TREEVIEW = True
 
+
 class Gene_Tree(ete2.Tree):
 
     def __init__(self, newick=None, format=0):
@@ -19,7 +20,6 @@ class Gene_Tree(ete2.Tree):
         self._dist = 1.0
         self._support = 1.0
         self._rootdist = 0 #added
-
 
         self.features = set([])
         # Add basic features
@@ -42,6 +42,19 @@ class Gene_Tree(ete2.Tree):
     def parse_species_name(self):
         if not self.children:
             return re.compile("(?<=_)[\w]+").search(self.name).group()
+
+    def _render(self,filename,**kwargs):
+        for n in self.traverse():
+            nstyle = ete2.NodeStyle()
+            if n.type()=="Y":
+                nstyle["fgcolor"]="red"
+                nstyle["size"]=8
+            elif n.type()=="N":
+                nstyle["fgcolor"]="blue"
+                nstyle["size"]=8
+            else: 
+                nstyle["fgcolor"]="lightblue"
+            n.set_style(nstyle)
         
     def type(self):
         if hasattr(self,'D'): return self.D
@@ -68,9 +81,6 @@ class Gene_Tree(ete2.Tree):
                 print "lightblue"
             n.set_style(nstyle)
         self.show()
-
-
-
 
 
 class Species_Tree(ete2.Tree):
@@ -105,13 +115,18 @@ class Species_Tree(ete2.Tree):
 
     def display(self):
         for n in self.traverse():
-            n.add_face(ete2.TextFace(n.count),column=0,position="branch-top")
+            if hasattr(n,'count'):
+                n.add_face(ete2.TextFace(n.count),column=0,position="branch-top")
         self.show()
 
-    def display_with_gene_tree(self,genetree):
-        for n in self.traverse():
-            n.add_face(ete2.TextFace(n._count),column=0,position="branch-top")
-            n.add_face(ete2.TextFace("{0:+}".format(n._change)),column=1,position="branch-bottom")
+    def _render(self,filename,**kwargs):
+        self.render(filename,**kwargs)
+
+    def display_with_gene_tree(self,genetree,scores=True):
+        if scores:
+            for n in self.traverse():
+                n.add_face(ete2.TextFace(n._count),column=0,position="branch-top")
+                n.add_face(ete2.TextFace("{0:+}".format(n._change)),column=1,position="branch-bottom")
         for n in genetree.traverse():
             nstyle = ete2.NodeStyle()
             if n.type()=="Y":
@@ -123,11 +138,11 @@ class Species_Tree(ete2.Tree):
             else: 
                 nstyle["fgcolor"]="lightblue"
             n.set_style(nstyle)
-
-        
+       
         def layout(node):
             species_ts = ete2.TreeStyle()
             species_ts.scale=60
+            species_ts.branch_vertical_margin=15
             if not node.up:
                 ete2.faces.add_face_to_node(ete2.TreeFace(self,species_ts),node,0,position="branch-top")
 
@@ -135,10 +150,11 @@ class Species_Tree(ete2.Tree):
         ts.layout_fn=layout
         genetree.show(tree_style=ts)
 
-    def render_with_gene_tree(self,genetree,filename):
-        for n in self.traverse():
-            n.add_face(ete2.TextFace(n._count),column=0,position="branch-top")
-            n.add_face(ete2.TextFace("{0:+}".format(n._change)),column=1,position="branch-bottom")
+    def render_with_gene_tree(self,genetree,filename,scores=True, **kwargs):
+        if scores:
+            for n in self.traverse():
+                n.add_face(ete2.TextFace(n._count),column=0,position="branch-top")
+                n.add_face(ete2.TextFace("{0:+}".format(n._change)),column=1,position="branch-bottom")
         for n in genetree.traverse():
             nstyle = ete2.NodeStyle()
             if n.type()=="Y":
@@ -160,8 +176,7 @@ class Species_Tree(ete2.Tree):
 
         ts = ete2.TreeStyle()
         ts.layout_fn=layout
-        genetree.render(filename,tree_style=ts)
-
+        genetree.render(filename,tree_style=ts, **kwargs)
 
     def _add(self,amount):
         self._count+=amount
@@ -253,8 +268,10 @@ class Species_Tree(ete2.Tree):
         for node in self.traverse('postorder'):
             print node,node._count
 
+
+
 small_st = "((Hsap,Ptro),Mmus);"
-small_gt = "((gene1_Mmus,(gene2_Hsap,gene2_Mmus)[&&NHX:D=N])[&&NHX:D=Y],((gene3_Hsap,gene3_Ptro)[&&NHX:D=N],(gene3_Mmus,gene3'_Mmus)[&&NHX:D=Y])[&&NHX:D=N])[&&NHX:D=Y];"
+small_gt = "(((gene1_Hsap,gene1_Mmus)[&&NHX:D=N],(((gene2a_Hsap,gene2a_Ptro)[&&NHX:D=N],(gene2b_Hsap,gene2b_Ptro)[&&NHX:D=N])[&&NHX:D=Y],(gene2a_Mmus,gene2b_Mmus)[&&NHX:D=Y])[&&NHX:D=N])[&&NHX:D=Y],((gene3_Hsap,gene3_Ptro)[&&NHX:D=N],(gene3_Mmus,gene3'_Mmus)[&&NHX:D=Y])[&&NHX:D=N])[&&NHX:D=Y];"
 compara_st = "(Hsap,Mmus);"
 compara_gt = "(((gene1_Hsap,gene1_Mmus)[&&NHX:D=N],((gene2a_Hsap,gene2b_Hsap)[&&NHX:D=Y],(gene2a_Mmus,gene2b_Mmus)[&&NHX:D=Y])[&&NHX:D=N])[&&NHX:D=Y],(gene3_Hsap,(gene3a_Mmus,gene3b_Mmus)[&&NHX:D=Y])[&&NHX:D=N])[&&NHX:D=Y];"
 big_st = "(((Hsap,Ptro),Nleu),(Mmus,Rnor));"
@@ -266,11 +283,17 @@ small_gt = Gene_Tree(small_gt)
 compara_gt = Gene_Tree(compara_gt)
 compara_st = Species_Tree(compara_st)
 compara_st.add_gene_tree(compara_gt)
-compara_st.render_with_gene_tree("compara.pdf",compara_gt)
 small_st.add_gene_tree(small_gt)
-small_st.render_with_gene_tree("small_st.pdf",small_gt)
+compara_st.display_with_gene_tree(compara_gt,False)
+compara_st.display_with_gene_tree(compara_gt,True)
 big_st.add_gene_tree(big_gt)
 # big_st.print_count()
-big_st.render_with_gene_tree("big_st.pdf",big_gt)
-
-
+# big_st.display()
+# small_st.display()
+# compara_st.display()
+# big_gt.display()
+# small_gt.display()
+# compara_gt.display()
+# big_st.render_with_gene_tree(big_gt,"big_both.pdf")
+# small_st.render_with_gene_tree(small_gt,"small_both.pdf")
+# compara_st.render_with_gene_tree(compara_gt,"compara_both.pdf")
