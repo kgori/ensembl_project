@@ -284,3 +284,25 @@ class SpeciesTree(ete2.Tree):
     def finalise_counts(self):
         for node in self.iter_descendants('preorder'):
             node._count += (node.up._count + node._gains - node._losses)
+
+
+
+
+
+
+
+species_tree_newick=open(sys.argv[1]).read()
+gene_tree_newick = open(sys.argv[2]).read()
+sp_tr = SpeciesTree(species_tree_newick,format=1)
+gn_tr = GeneTree(gene_tree_newick,format=1)
+gn_tr.get_descendant_evol_events()
+sp_tr.add_gene_tree(gn_tr)
+sp_tr.finalise_counts()
+# st = SpeciesTree('(SE001:60.971176,(SE002:54.097175,((SE003:8.863838,SE013:8.7271048):33.859374,(((SE004:40.303116,(SE007:35.957807,(SE008:27.55188,(SE010:23.561527,SE011:23.148886):2.2511886):0.10991615):3.753085):7.938699,SE006:35.196556):7.992514,((SE005:16.104527,(SE014:1.9441679,SE015:3.2796744):19.411262):15.863363,(SE009:19.907848,SE012:39.749202):5.4071946):19.687332):3.7807204):17.137093):7.2302568):0;')
+# gt=GeneTree('(SE001,(SE002,((((SE004,(SE007,(SE008,SE010))),SE006),((SE004,(SE007,(SE008,(SE008,SE010))[&&NHX:D=Y])),SE006))[&&NHX:D=Y],(((SE005,(SE014,SE015)),(SE009,SE012)),(SE005,(SE009,SE012)))[&&NHX:D=Y])));',format=1)
+# st.add_gene_tree(gt)
+# st._initialise(gt)
+sp_tr.display_with_gene_tree(gn_tr)
+
+
+

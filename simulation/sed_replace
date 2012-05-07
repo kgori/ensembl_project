@@ -1,0 +1,4 @@
+#!/bin/bash
+
+sed -ie "s/'//g" $@
+sed -ie 's/\/[0-9]*//g' $@

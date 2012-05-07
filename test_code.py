@@ -118,6 +118,12 @@ class Species_Tree(ete2.Tree):
             if hasattr(n,'count'):
                 n.add_face(ete2.TextFace(n.count),column=0,position="branch-top")
         self.show()
+    
+    def reset(self):
+        for n in self.traverse():
+            n._count=0
+            n._change=0
+            n._fitchset=set([])
 
     def _render(self,filename,**kwargs):
         self.render(filename,**kwargs)
