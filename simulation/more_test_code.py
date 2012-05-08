@@ -252,7 +252,7 @@ class SpeciesTree(ete2.Tree):
                 print "INITIALISING ON ROOT NODE, RECURSING"                                       # Do initialisation stuff,
                 already_deleted = self._initialise(gene_tree_node, init=True)   # then recurse on child nodes
                 for child in gene_tree_node.children:
-                    self.add_gene_tree(child, already_deleted=already_deleted)     
+                    self.add_gene_tree(child, already_deleted=already_deleted)    
             else:
                 print "DUPLICATION NODE FOUND AT ROOT"
                 subtree = self._find_mrca(gene_tree_node._taxon_set)
@@ -291,18 +291,25 @@ class SpeciesTree(ete2.Tree):
 
 
 
-species_tree_newick=open(sys.argv[1]).read()
-gene_tree_newick = open(sys.argv[2]).read()
-sp_tr = SpeciesTree(species_tree_newick,format=1)
-gn_tr = GeneTree(gene_tree_newick,format=1)
-gn_tr.get_descendant_evol_events()
-sp_tr.add_gene_tree(gn_tr)
-sp_tr.finalise_counts()
+# species_tree_newick=open(sys.argv[1]).read()
+# gene_tree_newick = open(sys.argv[2]).read()
+# sp_tr = SpeciesTree(species_tree_newick,format=1)
+# gn_tr = GeneTree(gene_tree_newick,format=1)
+# gn_tr.get_descendant_evol_events()
+# ad=sp_tr.add_gene_tree(gn_tr)
+# print ad
+# sp_tr.finalise_counts()
 # st = SpeciesTree('(SE001:60.971176,(SE002:54.097175,((SE003:8.863838,SE013:8.7271048):33.859374,(((SE004:40.303116,(SE007:35.957807,(SE008:27.55188,(SE010:23.561527,SE011:23.148886):2.2511886):0.10991615):3.753085):7.938699,SE006:35.196556):7.992514,((SE005:16.104527,(SE014:1.9441679,SE015:3.2796744):19.411262):15.863363,(SE009:19.907848,SE012:39.749202):5.4071946):19.687332):3.7807204):17.137093):7.2302568):0;')
 # gt=GeneTree('(SE001,(SE002,((((SE004,(SE007,(SE008,SE010))),SE006),((SE004,(SE007,(SE008,(SE008,SE010))[&&NHX:D=Y])),SE006))[&&NHX:D=Y],(((SE005,(SE014,SE015)),(SE009,SE012)),(SE005,(SE009,SE012)))[&&NHX:D=Y])));',format=1)
 # st.add_gene_tree(gt)
 # st._initialise(gt)
-sp_tr.display_with_gene_tree(gn_tr)
+# st.display_with_gene_tree(gt) 
+big_st = "(((Hsap,Ptro),Nleu),(Mmus,Rnor));"
+big_gt = "(((((gene1_Hsap,gene1_Ptro)[&&NHX:D=N],gene1_Nleu)[&&NHX:D=N],((gene1a_Mmus,gene1a_Rnor)[&&NHX:D=N],(gene1b_Mmus,gene1b_Rnor)[&&NHX:D=N])[&&NHX:D=Y])[&&NHX:D=N],((((gene2a_Hsap,gene2a_Ptro)[&&NHX:D=N],gene2a_Nleu)[&&NHX:D=N],((gene2b_Hsap,gene2c_Hsap)[&&NHX:D=Y],gene2b_Ptro)[&&NHX:D=N])[&&NHX:D=Y],((gene2a_Mmus,gene2a_Rnor)[&&NHX:D=N],(gene2b_Mmus,gene2b_Rnor)[&&NHX:D=N])[&&NHX:D=Y])[&&NHX:D=N])[&&NHX:D=Y],(((gene3_Hsap,gene3_Ptro)[&&NHX:D=N],gene3_Nleu)[&&NHX:D=N],((gene3a_Mmus,gene3_Rnor)[&&NHX:D=N],gene3b_Mmus)[&&NHX:D=Y])[&&NHX:D=N])[&&NHX:D=Y];"
+big_st = Species_Tree(big_st)
+big_gt = Gene_Tree(big_gt)
+big_st.add_gene_tree(big_gt)
+big_st.display_with_gene_tree(big_gt)
 
 
 
