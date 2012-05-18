@@ -17,6 +17,7 @@ def _get_species_subtree(self, species_tree):
 
     if gtp.leaf:
         if stp.leaf:
+            assert gtp._taxon_set == stp._taxon_set
             gtp._species_subtree = stp
             if gtp.root:
                 stp._count += 1

@@ -1,0 +1,370 @@
+Synthetic evolution
+-------------------
+
+first organism (artificial sequences): 20 proteins with 100 aa (average)
+height of tree: 29.61, Speciations: 57
+Gene duplication rate: 0.01, transloc. Dupl.: 0.00
+Gene loss rate: 0.01
+
+
+something interesting is happening here...
+time 0.0000: speciation event of organism 1 to organism 2
+time 2.4739: deletion of length 5 in org/gene 1/1
+time 1.3730: insertion of length 1 in org/gene 1/10
+time 3.0000: speciation event of organism 1 to organism 3
+time 4.0000: speciation event of organism 1 to organism 4
+k: 0, nloss: 1
+time 4.8942: gene loss in organism 1 with gene 7
+k: 0, nloss: 1
+time 5.6067: gene loss in organism 4 with gene 1
+time 6.0000: speciation event of organism 1 to organism 5
+k: 0, nloss: 1
+time 6.3417: gene loss in organism 3 with gene 19
+performing gene duplication of 2 genes
+time 7.0906: gene duplication in organism 3 with gene 18, now gene 21
+time 7.0906: gene duplication in organism 3 with gene 20, now gene 22
+k: 0, nloss: 1
+time 7.5648: gene loss in organism 2 with gene 12
+performing gene duplication of 1 genes
+time 7.6183: gene duplication in organism 4 with gene 4, now gene 23
+performing gene duplication of 2 genes
+time 8.5375: gene duplication in organism 4 with gene 11, now gene 24
+time 8.5375: gene duplication in organism 4 with gene 12, now gene 25
+k: 0, nloss: 1
+time 8.7738: gene loss in organism 2 with gene 13
+performing gene duplication of 2 genes
+time 9.3975: gene duplication in organism 1 with gene 4, now gene 26
+time 9.3975: gene duplication in organism 1 with gene 5, now gene 27
+k: 0, nloss: 1
+time 11.1589: gene loss in organism 2 with gene 2
+time 10.7314: insertion of length 1 in org/gene 1/19
+time 11.2669: speciation event of organism 1 to organism 6
+k: 0, nloss: 1
+time 11.6012: gene loss in organism 5 with gene 19
+time 6.8286: insertion of length 6 in org/gene 5/2
+time 12.0000: speciation event of organism 5 to organism 7
+performing gene duplication of 3 genes
+time 12.3480: gene duplication in organism 6 with gene 26, now gene 28
+time 12.3480: gene duplication in organism 6 with gene 27, now gene 29
+time 12.3480: gene duplication in organism 6 with gene 6, now gene 30
+k: 0, nloss: 1
+time 12.4733: gene loss in organism 1 with gene 1
+performing gene duplication of 3 genes
+time 13.9674: gene duplication in organism 6 with gene 14, now gene 31
+time 13.9674: gene duplication in organism 6 with gene 15, now gene 32
+time 13.9674: gene duplication in organism 6 with gene 16, now gene 33
+performing gene duplication of 2 genes
+time 14.0958: gene duplication in organism 7 with gene 16, now gene 34
+time 14.0958: gene duplication in organism 7 with gene 17, now gene 35
+k: 0, nloss: 1
+time 15.4493: gene loss in organism 7 with gene 8
+performing gene duplication of 3 genes
+time 15.6055: gene duplication in organism 2 with gene 9, now gene 36
+time 15.6055: gene duplication in organism 2 with gene 10, now gene 37
+time 15.6055: gene duplication in organism 2 with gene 11, now gene 38
+performing gene duplication of 3 genes
+time 15.7880: gene duplication in organism 1 with gene 9, now gene 39
+time 15.7880: gene duplication in organism 1 with gene 10, now gene 40
+time 15.7880: gene duplication in organism 1 with gene 11, now gene 41
+k: 0, nloss: 1
+time 16.0081: gene loss in organism 7 with gene 3
+k: 0, nloss: 1
+time 16.1971: gene loss in organism 3 with gene 20
+time 13.9630: insertion of length 1 in org/gene 1/6
+time 14.5927: deletion of length 2 in org/gene 1/10
+time 16.5338: speciation event of organism 1 to organism 8
+performing gene duplication of 3 genes
+time 16.8214: gene duplication in organism 7 with gene 5, now gene 42
+time 16.8214: gene duplication in organism 7 with gene 6, now gene 43
+time 16.8214: gene duplication in organism 7 with gene 9, now gene 44
+performing gene duplication of 2 genes
+time 17.3296: gene duplication in organism 8 with gene 9, now gene 45
+time 17.3296: gene duplication in organism 8 with gene 10, now gene 46
+k: 0, nloss: 1
+time 17.5917: gene loss in organism 8 with gene 45
+k: 0, nloss: 1
+time 17.9211: gene loss in organism 2 with gene 14
+time 18.0132: speciation event of organism 8 to organism 9
+time 18.0905: speciation event of organism 1 to organism 10
+k: 0, nloss: 1
+time 18.4240: gene loss in organism 8 with gene 15
+performing gene duplication of 1 genes
+time 18.7254: gene duplication in organism 5 with gene 9, now gene 47
+performing gene duplication of 1 genes
+time 18.7298: gene duplication in organism 8 with gene 16, now gene 48
+k: 0, nloss: 1
+time 18.8464: gene loss in organism 8 with gene 46
+k: 0, nloss: 1
+time 18.8530: gene loss in organism 3 with gene 2
+performing gene duplication of 2 genes
+time 19.0096: gene duplication in organism 8 with gene 10, now gene 49
+time 19.0096: gene duplication in organism 8 with gene 11, now gene 50
+time 18.5467: insertion of length 2 in org/gene 8/6
+time 18.3084: insertion of length 3 in org/gene 8/19
+time 18.9210: insertion of length 1 in org/gene 8/23
+time 19.6414: speciation event of organism 8 to organism 11
+time 19.6473: speciation event of organism 1 to organism 12
+performing gene duplication of 2 genes
+time 19.8134: gene duplication in organism 11 with gene 41, now gene 51
+time 19.8134: gene duplication in organism 11 with gene 12, now gene 52
+performing gene duplication of 3 genes
+time 20.0743: gene duplication in organism 12 with gene 3, now gene 53
+time 20.0743: gene duplication in organism 12 with gene 4, now gene 54
+time 20.0743: gene duplication in organism 12 with gene 5, now gene 55
+performing gene duplication of 2 genes
+time 20.5507: gene duplication in organism 9 with gene 39, now gene 56
+time 20.5507: gene duplication in organism 9 with gene 40, now gene 57
+performing gene duplication of 1 genes
+time 20.7430: gene duplication in organism 8 with gene 20, now gene 58
+performing gene duplication of 3 genes
+time 20.7725: gene duplication in organism 9 with gene 41, now gene 59
+time 20.7725: gene duplication in organism 9 with gene 12, now gene 60
+time 20.7725: gene duplication in organism 9 with gene 13, now gene 61
+time 20.6284: deletion of length 1 in org/gene 8/10
+time 21.2696: speciation event of organism 8 to organism 13
+time 21.3710: speciation event of organism 1 to organism 14
+performing gene duplication of 3 genes
+time 21.7480: gene duplication in organism 8 with gene 3, now gene 62
+time 21.7480: gene duplication in organism 8 with gene 4, now gene 63
+time 21.7480: gene duplication in organism 8 with gene 5, now gene 64
+time 21.8611: speciation event of organism 13 to organism 15
+performing gene duplication of 3 genes
+time 22.0507: gene duplication in organism 14 with gene 6, now gene 65
+time 22.0507: gene duplication in organism 14 with gene 8, now gene 66
+time 22.0507: gene duplication in organism 14 with gene 9, now gene 67
+time 21.6048: deletion of length 1 in org/gene 14/23
+time 22.4224: speciation event of organism 14 to organism 16
+time 22.4661: speciation event of organism 1 to organism 17
+performing gene duplication of 2 genes
+time 22.7108: gene duplication in organism 8 with gene 41, now gene 68
+time 22.7108: gene duplication in organism 8 with gene 12, now gene 69
+performing gene duplication of 2 genes
+time 23.0036: gene duplication in organism 17 with gene 17, now gene 70
+time 23.0036: gene duplication in organism 17 with gene 18, now gene 71
+performing gene duplication of 1 genes
+time 23.0414: gene duplication in organism 15 with gene 39, now gene 72
+performing gene duplication of 1 genes
+time 23.0779: gene duplication in organism 14 with gene 9, now gene 73
+time 23.1827: speciation event of organism 1 to organism 18
+time 21.9270: deletion of length 1 in org/gene 8/1
+time 23.2215: speciation event of organism 8 to organism 19
+performing gene duplication of 2 genes
+time 23.8475: gene duplication in organism 1 with gene 11, now gene 74
+time 23.8475: gene duplication in organism 1 with gene 39, now gene 75
+performing gene duplication of 3 genes
+time 23.8516: gene duplication in organism 1 with gene 3, now gene 76
+time 23.8516: gene duplication in organism 1 with gene 4, now gene 77
+time 23.8516: gene duplication in organism 1 with gene 5, now gene 78
+performing gene duplication of 1 genes
+time 24.0397: gene duplication in organism 8 with gene 5, now gene 79
+performing gene duplication of 3 genes
+time 24.1574: gene duplication in organism 1 with gene 17, now gene 80
+time 24.1574: gene duplication in organism 1 with gene 18, now gene 81
+time 24.1574: gene duplication in organism 1 with gene 19, now gene 82
+performing gene duplication of 3 genes
+time 24.2709: gene duplication in organism 14 with gene 13, now gene 83
+time 24.2709: gene duplication in organism 14 with gene 14, now gene 84
+time 24.2709: gene duplication in organism 14 with gene 15, now gene 85
+time 24.2689: deletion of length 13 in org/gene 14/2
+time 23.0909: deletion of length 1 in org/gene 14/3
+time 23.2240: insertion of length 1 in org/gene 14/24
+time 24.4147: speciation event of organism 14 to organism 20
+k: 0, nloss: 1
+time 24.5016: gene loss in organism 14 with gene 2
+time 24.7425: deletion of length 1 in org/gene 20/17
+time 24.8285: speciation event of organism 20 to organism 21
+performing gene duplication of 2 genes
+time 24.8424: gene duplication in organism 20 with gene 11, now gene 86
+time 24.8424: gene duplication in organism 20 with gene 39, now gene 87
+k: 0, nloss: 1
+time 25.0253: gene loss in organism 20 with gene 15
+performing gene duplication of 1 genes
+time 25.2467: gene duplication in organism 8 with gene 79, now gene 88
+time 25.3337: speciation event of organism 18 to organism 22
+performing gene duplication of 2 genes
+time 25.4337: gene duplication in organism 14 with gene 19, now gene 89
+time 25.4337: gene duplication in organism 14 with gene 20, now gene 90
+performing gene duplication of 3 genes
+time 25.5041: gene duplication in organism 1 with gene 5, now gene 91
+time 25.5041: gene duplication in organism 1 with gene 76, now gene 92
+time 25.5041: gene duplication in organism 1 with gene 77, now gene 93
+performing gene duplication of 2 genes
+time 25.5128: gene duplication in organism 18 with gene 16, now gene 94
+time 25.5128: gene duplication in organism 18 with gene 17, now gene 95
+time 25.5300: speciation event of organism 1 to organism 23
+time 25.5437: speciation event of organism 22 to organism 24
+time 25.5971: speciation event of organism 23 to organism 25
+performing gene duplication of 3 genes
+time 25.6397: gene duplication in organism 23 with gene 16, now gene 96
+time 25.6397: gene duplication in organism 23 with gene 17, now gene 97
+time 25.6397: gene duplication in organism 23 with gene 18, now gene 98
+time 25.7666: speciation event of organism 1 to organism 26
+performing gene duplication of 3 genes
+time 25.9059: gene duplication in organism 14 with gene 67, now gene 99
+time 25.9059: gene duplication in organism 14 with gene 10, now gene 100
+time 25.9059: gene duplication in organism 14 with gene 11, now gene 101
+time 25.9725: speciation event of organism 1 to organism 27
+performing gene duplication of 3 genes
+time 25.9775: gene duplication in organism 27 with gene 10, now gene 102
+time 25.9775: gene duplication in organism 27 with gene 11, now gene 103
+time 25.9775: gene duplication in organism 27 with gene 39, now gene 104
+time 25.9789: speciation event of organism 26 to organism 28
+time 26.0219: speciation event of organism 1 to organism 29
+k: 0, nloss: 1
+time 26.0735: gene loss in organism 27 with gene 76
+time 26.0941: speciation event of organism 23 to organism 30
+time 26.0956: speciation event of organism 26 to organism 31
+time 26.1257: speciation event of organism 27 to organism 32
+time 26.1286: speciation event of organism 25 to organism 33
+time 26.1407: speciation event of organism 31 to organism 34
+time 26.1769: speciation event of organism 1 to organism 35
+time 26.2022: deletion of length 1 in org/gene 31/7
+time 26.2029: speciation event of organism 31 to organism 36
+performing gene duplication of 3 genes
+time 26.2823: gene duplication in organism 28 with gene 27, now gene 105
+time 26.2823: gene duplication in organism 28 with gene 6, now gene 106
+time 26.2823: gene duplication in organism 28 with gene 8, now gene 107
+time 26.2875: speciation event of organism 1 to organism 37
+time 26.2973: speciation event of organism 26 to organism 38
+performing gene duplication of 3 genes
+time 26.3029: gene duplication in organism 35 with gene 14, now gene 108
+time 26.3029: gene duplication in organism 35 with gene 15, now gene 109
+time 26.3029: gene duplication in organism 35 with gene 16, now gene 110
+k: 0, nloss: 1
+time 26.3138: gene loss in organism 35 with gene 78
+time 26.3640: speciation event of organism 23 to organism 39
+time 26.3831: speciation event of organism 27 to organism 40
+k: 0, nloss: 1
+time 26.4083: gene loss in organism 32 with gene 39
+performing gene duplication of 2 genes
+time 26.4147: gene duplication in organism 39 with gene 18, now gene 111
+time 26.4147: gene duplication in organism 39 with gene 96, now gene 112
+performing gene duplication of 2 genes
+time 26.4700: gene duplication in organism 33 with gene 75, now gene 113
+time 26.4700: gene duplication in organism 33 with gene 40, now gene 114
+time 26.4777: speciation event of organism 34 to organism 41
+time 26.4846: speciation event of organism 27 to organism 42
+time 26.4989: speciation event of organism 26 to organism 43
+performing gene duplication of 2 genes
+time 26.4997: gene duplication in organism 23 with gene 92, now gene 115
+time 26.4997: gene duplication in organism 23 with gene 93, now gene 116
+time 26.3437: insertion of length 1 in org/gene 35/18
+time 26.5315: speciation event of organism 35 to organism 44
+time 26.1687: insertion of length 1 in org/gene 28/1
+time 26.5428: speciation event of organism 28 to organism 45
+time 26.7013: speciation event of organism 36 to organism 46
+performing gene duplication of 2 genes
+time 26.7049: gene duplication in organism 27 with gene 6, now gene 117
+time 26.7049: gene duplication in organism 27 with gene 8, now gene 118
+time 26.7146: speciation event of organism 27 to organism 47
+time 26.7505: speciation event of organism 43 to organism 48
+performing gene duplication of 2 genes
+time 26.8133: gene duplication in organism 28 with gene 76, now gene 119
+time 26.8133: gene duplication in organism 28 with gene 77, now gene 120
+time 26.8634: speciation event of organism 1 to organism 49
+performing gene duplication of 2 genes
+time 26.8916: gene duplication in organism 35 with gene 26, now gene 121
+time 26.8916: gene duplication in organism 35 with gene 27, now gene 122
+k: 0, nloss: 1
+time 26.9240: gene loss in organism 25 with gene 93
+performing gene duplication of 1 genes
+time 26.9278: gene duplication in organism 26 with gene 27, now gene 123
+k: 0, nloss: 1
+time 26.9606: gene loss in organism 42 with gene 80
+performing gene duplication of 1 genes
+time 26.9915: gene duplication in organism 32 with gene 92, now gene 124
+performing gene duplication of 2 genes
+time 27.0378: gene duplication in organism 1 with gene 19, now gene 125
+time 27.0378: gene duplication in organism 1 with gene 80, now gene 126
+k: 0, nloss: 1
+time 27.0634: gene loss in organism 39 with gene 9
+k: 0, nloss: 1
+time 27.0723: gene loss in organism 31 with gene 74
+performing gene duplication of 3 genes
+time 27.0792: gene duplication in organism 42 with gene 13, now gene 127
+time 27.0792: gene duplication in organism 42 with gene 14, now gene 128
+time 27.0792: gene duplication in organism 42 with gene 15, now gene 129
+time 27.0830: speciation event of organism 1 to organism 50
+time 27.1403: speciation event of organism 32 to organism 51
+time 27.1547: speciation event of organism 1 to organism 52
+time 26.7876: insertion of length 12 in org/gene 46/23
+time 27.2136: speciation event of organism 46 to organism 53
+time 27.2264: speciation event of organism 1 to organism 54
+performing gene duplication of 3 genes
+time 27.2872: gene duplication in organism 34 with gene 15, now gene 130
+time 27.2872: gene duplication in organism 34 with gene 16, now gene 131
+time 27.2872: gene duplication in organism 34 with gene 17, now gene 132
+time 27.3232: speciation event of organism 1 to organism 55
+time 27.3457: speciation event of organism 1 to organism 56
+performing gene duplication of 3 genes
+time 27.3852: gene duplication in organism 1 with gene 14, now gene 133
+time 27.3852: gene duplication in organism 1 with gene 15, now gene 134
+time 27.3852: gene duplication in organism 1 with gene 16, now gene 135
+k: 0, nloss: 1
+time 27.4736: gene loss in organism 28 with gene 6
+performing gene duplication of 1 genes
+time 27.5481: gene duplication in organism 12 with gene 53, now gene 136
+performing gene duplication of 1 genes
+time 27.5531: gene duplication in organism 39 with gene 111, now gene 137
+performing gene duplication of 2 genes
+time 27.5705: gene duplication in organism 41 with gene 4, now gene 138
+time 27.5705: gene duplication in organism 41 with gene 5, now gene 139
+performing gene duplication of 3 genes
+time 27.7526: gene duplication in organism 32 with gene 17, now gene 140
+time 27.7526: gene duplication in organism 32 with gene 18, now gene 141
+time 27.7526: gene duplication in organism 32 with gene 19, now gene 142
+performing gene duplication of 3 genes
+time 27.8269: gene duplication in organism 29 with gene 93, now gene 143
+time 27.8269: gene duplication in organism 29 with gene 78, now gene 144
+time 27.8269: gene duplication in organism 29 with gene 26, now gene 145
+performing gene duplication of 2 genes
+time 27.8299: gene duplication in organism 45 with gene 12, now gene 146
+time 27.8299: gene duplication in organism 45 with gene 13, now gene 147
+k: 0, nloss: 1
+time 27.8328: gene loss in organism 29 with gene 16
+performing gene duplication of 3 genes
+time 28.3178: gene duplication in organism 28 with gene 12, now gene 148
+time 28.3178: gene duplication in organism 28 with gene 13, now gene 149
+time 28.3178: gene duplication in organism 28 with gene 14, now gene 150
+performing gene duplication of 3 genes
+time 28.6806: gene duplication in organism 45 with gene 18, now gene 151
+time 28.6806: gene duplication in organism 45 with gene 19, now gene 152
+time 28.6806: gene duplication in organism 45 with gene 80, now gene 153
+time 28.1520: deletion of length 1 in org/gene 27/32
+time 28.6923: speciation event of organism 27 to organism 57
+time 10.7071: deletion of length 5 in org/gene 2/6
+time 6.6711: deletion of length 12 in org/gene 2/16
+time 7.6833: deletion of length 2 in org/gene 2/16
+time 3.2690: insertion of length 1 in org/gene 3/2
+time 16.7776: deletion of length 1 in org/gene 3/8
+time 6.1055: deletion of length 1 in org/gene 3/10
+time 3.2576: insertion of length 1 in org/gene 3/14
+time 12.0257: insertion of length 1 in org/gene 3/19
+time 14.6530: insertion of length 1 in org/gene 5/2
+time 19.1814: deletion of length 1 in org/gene 5/2
+time 17.0936: insertion of length 1 in org/gene 7/1
+time 15.9379: deletion of length 14 in org/gene 7/16
+time 23.5571: insertion of length 1 in org/gene 8/6
+time 19.7374: insertion of length 1 in org/gene 9/1
+time 20.3413: insertion of length 2 in org/gene 9/2
+time 19.2859: insertion of length 1 in org/gene 9/24
+time 21.2453: deletion of length 9 in org/gene 12/14
+time 25.4801: deletion of length 16 in org/gene 15/5
+time 25.6745: insertion of length 1 in org/gene 16/2
+time 24.0052: insertion of length 25 in org/gene 16/7
+time 23.6255: insertion of length 1 in org/gene 16/18
+time 25.2481: deletion of length 6 in org/gene 17/15
+time 22.8948: deletion of length 3 in org/gene 17/17
+time 23.2931: deletion of length 1 in org/gene 19/30
+time 26.2959: insertion of length 1 in org/gene 25/10
+time 27.1293: insertion of length 3 in org/gene 30/24
+time 27.6163: deletion of length 4 in org/gene 37/11
+time 27.3898: deletion of length 33 in org/gene 41/32
+time 28.5783: deletion of length 5 in org/gene 45/38
+time 27.4815: insertion of length 1 in org/gene 49/33
+time 28.5681: insertion of length 3 in org/gene 51/29
+
+
+
+1839 genes in 57 species generated
+60 gene duplications resulting in 826 genes

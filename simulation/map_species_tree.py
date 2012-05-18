@@ -2,6 +2,7 @@
 # -*- coding: utf-8 -*-
 
 import ete2
+import copy
 import re
 import sys
 from ete2.parser.newick import read_newick, write_newick
@@ -86,219 +87,154 @@ class GeneTree(ete2.PhyloTree):
         gtp.identify()
         stp.identify()
 
-        if verbose:
-            print 'GTP=', gtp
-        if gtp.root:
-            if verbose:
-                print 'GTP is root'
-        if gtp.speciation:
-            if verbose:
-                print 'GTP is speciation'
-        if gtp.duplication:
-            if verbose:
-                print 'GTP is duplication'
-        if gtp.leaf:
-            if verbose:
-                print 'GTP is leaf'
-        if verbose:
-            print 'STP=', stp
-        if stp.leaf:
-            if verbose:
-                print 'STP is leaf'
-
         if not stp.leaf:
-            if verbose:
-                print 'stp is not a leaf'
             stp.L = species_tree.children[0]
             stp.R = species_tree.children[1]
 
         if gtp.leaf:
-            if verbose:
-                print 'gtp is a leaf'
-            if stp.leaf:
-                if verbose:
-                    print 'stp is a leaf as well - MATCH'
+            if stp.leaf:  # this is a match
+                assert gtp._taxon_set == stp._taxon_set
                 gtp._species_subtree = stp
                 if gtp.root:
                     stp._count += 1
-                    print 'l:124=root count +1', gtp,stp
-                if verbose:
-                    print 'gtp._species subtree set to stp'
-                    print 'count, gains, losses=',stp._count, stp._gains, stp._losses
-                if verbose:
-                    print gtp._species_subtree
                 return
             elif gtp._taxon_set <= stp.L._taxon_set:
-                if verbose:
-                    print 'gtp is a subset of stp.L, recursing...'
                 if not gtp.root:
                     stp.R._losses += 1
-                    print 'l:136 loss stp.R =count, gains, losses=',gtp,stp,stp.R._count, stp.R._gains, stp.R._losses
-                gtp._get_species_subtree(stp.L, verbose)
+                gtp._get_species_subtree(stp.L)  # there have been deletions in the gene tree, lose stp.R and progress to stp.L
                 return
             elif gtp._taxon_set <= stp.R._taxon_set:
-                if verbose:
-                    print 'gtp is a subset of stp.R, recursing...'
                 if not gtp.root:
                     stp.L._losses += 1
-                    print 'l:144 loss stp.L =count, gains, losses=',gtp,stp,stp.L._count, stp.L._gains, stp.L._losses
-                gtp._get_species_subtree(stp.R, verbose)
+                gtp._get_species_subtree(stp.R, verbose)  # there have been deletions in the gene tree, lose stp.L and progress to stp.R
                 return
             else:
                 raise TreeAlignmentError('Gene tree leaf doesn\'t match species tree'
                         )
         else:
-            if verbose:
-                print 'gtp is not a leaf'
             gtp.L = self.children[0]
             gtp.R = self.children[1]
 
+        if stp.leaf:
+            try:
+                assert gtp.duplication
+            except AssertionError:
+                try:
+                    raise NodeLabellingError('Thought this node should be labelled as a duplication'
+                            )
+                except NodeLabellingError, e:
+                    print 'NodeLabellingError:'
+                    print gtp, stp, e
+                    gtp.duplication = True
+            gtp._species_subtree = stp
+            stp._gains += 1
             if gtp.root:
-                if verbose:
-                    print 'gtp is root'
-            if gtp.speciation:
-                if verbose:
-                    print 'gtp is a speciation'
+                stp._count += 1
+            gtp.L._get_species_subtree(stp, verbose)
+            gtp.R._get_species_subtree(stp, verbose)
+            return
+        elif gtp.L._taxon_set <= stp.L._taxon_set \
+            and gtp.L._taxon_set <= stp.R._taxon_set:
+            raise TreeAlignmentError('Possible Mislabelling of GeneTree nodes'
+                    )
+        elif gtp.L._taxon_set <= stp.L._taxon_set \
+            and gtp.R._taxon_set <= stp.L._taxon_set:
+            if not gtp.root:
+                stp.R._losses += 1
+            gtp._get_species_subtree(stp.L, verbose)
+            return
+        elif gtp.L._taxon_set <= stp.L._taxon_set \
+            and gtp.R._taxon_set <= stp.R._taxon_set:
+            gtp._species_subtree = stp
+            if gtp.root:
+                stp._count += 1
             if gtp.duplication:
-                if verbose:
-                    print 'gtp is a duplication'
-
-            if stp.leaf:
-                if verbose:
-                    print 'stp is leaf, but gtp isn\'t, implies duplication'
-                try:
-                    assert gtp.duplication
-                except AssertionError:
-                    try:
-                        raise NodeLabellingError('Thought this node should be labelled as a duplication'
-                                )
-                    except NodeLabellingError, e:
-                        print 'NodeLabellingError:'
-                        print gtp, stp, e
-                        pass
-                if verbose:
-                    print 'matching and recursing'
-                gtp._species_subtree = stp
-                stp._gains += 1
-                print 'count, gains, losses=',stp._count, stp._gains, stp._losses
-                if gtp.root:
-                    stp._count += 1
-                    print 'l:186, root count +1=count, gains, losses=',gtp,stp,stp._count, stp._gains, stp._losses
-                gtp.L._get_species_subtree(stp, verbose)
-                gtp.R._get_species_subtree(stp, verbose)
-                return
-            elif gtp.L._taxon_set <= stp.L._taxon_set \
-                and gtp.L._taxon_set <= stp.R._taxon_set:
-                if verbose:
-                    print 'gtp.L is a subset of stp.L'
-                if verbose:
-                    print 'gtp.L is a subset of stp.R - ERROR'
-                raise TreeAlignmentError('Possible Mislabelling of GeneTree nodes'
+                raise TreeAlignmentError('shouldn\'t be a duplication here...'
                         )
-            elif gtp.L._taxon_set <= stp.L._taxon_set \
-                and gtp.R._taxon_set <= stp.L._taxon_set:
-                if verbose:
-                    print 'gtp.L is a subset of stp.L'
-                if verbose:
-                    print 'gtp.R is a subset of stp.L'
-                if verbose:
-                    print 'advancing stp to stp.L, recursing....'
-                if not gtp.root:
-                    stp.R._losses += 1
-                    print 'l:208 stp.R loss=count, gains, losses=',gtp,stp,stp.R._count, stp.R._gains, stp.R._losses
-                gtp._get_species_subtree(stp.L, verbose)
-                return
-            elif gtp.L._taxon_set <= stp.L._taxon_set \
-                and gtp.R._taxon_set <= stp.R._taxon_set:
-                if verbose:
-                    print 'gtp.L is a subset of stp.L'
-                if verbose:
-                    print 'gtp.R is a subset of stp.R'
-                gtp._species_subtree = stp
-                if verbose:
-                    print 'MATCH. setting gtp._species_subtree to stp. recursing...'
-                if gtp.root:
-                    stp._count += 1
-                    print 'l:222 - root gain =count, gains, losses=',gtp,stp,stp._count, stp._gains, stp._losses
-                if gtp.duplication:
-                    raise TreeAlignmentError('shouldn\'t be a duplication here...'
-                            )
-                gtp.L._get_species_subtree(stp.L, verbose)
-                gtp.R._get_species_subtree(stp.R, verbose)
-                return
-            elif gtp.L._taxon_set <= stp.R._taxon_set \
-                and gtp.R._taxon_set <= stp.L._taxon_set:
-                if verbose:
-                    print 'gtp.L is a subset of stp.R'
-                if verbose:
-                    print 'gtp.R is a subset of stp.L'
-                (gtp.R, gtp.L) = (gtp.L, gtp.R)
-                gtp.swap_children()
-                gtp._species_subtree = stp
-                if verbose:
-                    print 'REVERSE MATCH. setting gtp._species_subtree to stp, recursing...'
-                if gtp.root:
-                    stp._count += 1
-                    print 'l:242 - root gain=count, gains, losses=',gtp,stp,stp._count, stp._gains, stp._losses
-                if gtp.duplication:
-                    raise TreeAlignmentError('shouldn\'t be a duplication here...'
-                            )
-                gtp.L._get_species_subtree(stp.L, verbose)
-                gtp.R._get_species_subtree(stp.R, verbose)
-                return
-            elif gtp.L._taxon_set <= stp.R._taxon_set \
-                and gtp.R._taxon_set <= stp.R._taxon_set:
-                if verbose:
-                    print 'gtp.L is a subset of stp.R'
-                if verbose:
-                    print 'gtp.R is a subset of stp.R'
-                if verbose:
-                    print 'advancing pointer to stp.R, recursing...'
-                if not gtp.root:
-                    stp.L._losses += 1
-                    print 'l:259, stp.L loss=count, gains, losses=',gtp,stp,stp.L._count, stp.L._gains, stp.L._losses
-                gtp._get_species_subtree(stp.R, verbose)
-                return
-            elif gtp.R._taxon_set <= stp.R._taxon_set \
-                and gtp.R._taxon_set <= stp.L._taxon_set:
-                if verbose:
-                    print 'gtp.R is a subset of stp.R and of stp.L - ERROR'
-                raise TreeAlignmentError('Possible Mislabelling of GeneTree nodes'
+            gtp.L._get_species_subtree(stp.L, verbose)
+            gtp.R._get_species_subtree(stp.R, verbose)
+            return
+        elif gtp.L._taxon_set <= stp.R._taxon_set \
+            and gtp.R._taxon_set <= stp.L._taxon_set:
+            (gtp.R, gtp.L) = (gtp.L, gtp.R)
+            gtp.swap_children()
+            gtp._species_subtree = stp
+            if gtp.root:
+                stp._count += 1
+            if gtp.duplication:
+                raise TreeAlignmentError('shouldn\'t be a duplication here...'
                         )
-            elif stp.L._taxon_set & gtp._taxon_set and stp.R._taxon_set \
-                & gtp._taxon_set:
-
-                if verbose:
-                    print 'stp.L and stp.R intersect with union of gtp.L and gtp.R'
-                if verbose:
-                    print 'Implies duplication node, assertion check...'
+            gtp.L._get_species_subtree(stp.L, verbose)
+            gtp.R._get_species_subtree(stp.R, verbose)
+            return
+        elif gtp.L._taxon_set <= stp.R._taxon_set \
+            and gtp.R._taxon_set <= stp.R._taxon_set:
+            if not gtp.root:
+                stp.L._losses += 1
+            gtp._get_species_subtree(stp.R, verbose)
+            return
+        elif gtp.R._taxon_set <= stp.R._taxon_set \
+            and gtp.R._taxon_set <= stp.L._taxon_set:
+            raise TreeAlignmentError('Possible Mislabelling of GeneTree nodes'
+                    )
+        elif stp.L._taxon_set & gtp._taxon_set and stp.R._taxon_set \
+            & gtp._taxon_set:
+            try:
+                assert gtp.duplication
+            except AssertionError:
                 try:
-                    assert gtp.duplication
-                except AssertionError:
+                    raise NodeLabellingError('''
+The gene tree topology doesn\'t match the species tree.
+Maybe this node should be marked as a duplication?
+Continuing as if this node were a duplication...
+''')
+                except NodeLabellingError, e:
+                    print 'NodeLabellingError:'
+                    print gtp, "NHX:D=", gtp.D, stp, e.value
+                    compatibles = [gtp.L._taxon_set & stp.L._taxon_set, gtp.R._taxon_set & stp.R._taxon_set]
+                    conflicts = [gtp.L._taxon_set & stp.R._taxon_set, gtp.R._taxon_set & stp.L._taxon_set]
+                    print 'conflicts (l,r)', conflicts
+                    print 'compatibles (l,r)', compatibles
+                    new_gtp = copy.deepcopy(gtp)
                     try:
-                        raise NodeLabellingError('Thought this node should be labelled as a duplication'
-                                )
-                    except NodeLabellingError, e:
-                        print 'NodeLabellingError:'
-                        print gtp, stp, e
-                        pass
+                        if len(conflicts[0]) < len(conflicts[1]):
+                            if len(conflicts[1]) > 1:
+                                nodes = []
+                                for n in new_gtp.iter_leaves:
+                                    for name in conflicts[1]:
+                                        if name in n.name:
+                                            nodes.append(n)
+                                print nodes
+                                mrca = new_gtp.get_common_ancestor(nodes)
+                            else:
+                                mrca = new_gtp&list(conflicts[1])[0]
+                        else:
+                            if len(conflicts[0]) > 1:
+                                nodes = []
+                                for n in new_gtp.iter_leaves:
+                                    for name in conflicts[0]:
+                                        if name in n.name:
+                                            nodes.append(n)
+                                print nodes
+                                mrca = new_gtp.get_common_ancestor(nodes)
+                            else:
+                                mrca = new_gtp&list(conflicts[0])[0]
+                        new_gtp.set_outgroup(mrca)
+                        print 'Guessing topology to be',new_gtp
+                    except:
+                        print 'Error'
+                    gtp.duplication = True                
 
-                if verbose:
-                    print 'assertion pass.'
-                if verbose:
-                    print 'MATCH, and gain'
-                stp._gains += 1
-                print 'l:291 gain=count, gains, losses=',gtp,stp,stp._count, stp._gains, stp._losses
-                if gtp.root:
-                    stp._count += 1
-                    print 'l:294 root gain=count, gains, losses=',gtp,stp,stp._count, stp._gains, stp._losses
-                gtp._species_subtree = stp
-                gtp.L._get_species_subtree(stp, verbose)
-                gtp.R._get_species_subtree(stp, verbose)
-                return
-            else:
-                raise TreeAlignmentError('Case fell through')
-        return
+            stp._gains += 1
+            if gtp.root:
+                stp._count += 1
+            gtp._species_subtree = stp
+            gtp.L._get_species_subtree(stp, verbose)
+            gtp.R._get_species_subtree(stp, verbose)
+            return
+        else:
+            raise TreeAlignmentError('Case fell through')
+    
 
     def __init__(self, newick=None, format=0):
 
@@ -382,8 +318,8 @@ class SpeciesTree(ete2.Tree):
         self._support = 1.0
         self._count = 0  # added
         self._gains = 0  # added
-        self._justgains =0
-        self._justcount =0
+        self._justgains = 0
+        self._justcount = 0
         self._losses = 0  # added
         self._change = 0  # added
         self._events = []  # added
@@ -465,7 +401,7 @@ class SpeciesTree(ete2.Tree):
 
         ts = ete2.TreeStyle()
         ts.layout_fn = layout
-        ts.title.add_face(ete2.TextFace(sys.argv[2], fsize=20),
+        if len(sys.argv)>1: ts.title.add_face(ete2.TextFace(sys.argv[2], fsize=20),
                           column=0)
         genetree.show(tree_style=ts)
 
@@ -485,12 +421,13 @@ class SpeciesTree(ete2.Tree):
             node._count += node.up._count + node._gains - node._losses
 
 
-# st = \
-#     SpeciesTree('(SE001:60.971176,(SE002:54.097175,((SE003:8.863838,SE013:8.7271048):33.859374,(((SE004:40.303116,(SE007:35.957807,(SE008:27.55188,(SE010:23.561527,SE011:23.148886):2.2511886):0.10991615):3.753085):7.938699,SE006:35.196556):7.992514,((SE005:16.104527,(SE014:1.9441679,SE015:3.2796744):19.411262):15.863363,(SE009:19.907848,SE012:39.749202):5.4071946):19.687332):3.7807204):17.137093):7.2302568):0;'
-#                 )
-# gt = \
-#     GeneTree('(SE001,(SE002,((((SE004,(SE007,(SE008,SE010))),SE006),((SE004,(SE007,(SE008,(SE008,SE010))[&&NHX:D=Y])),SE006))[&&NHX:D=Y],(((SE005,(SE014,SE015)),(SE009,SE012)),(SE005,(SE009,SE012)))[&&NHX:D=Y])));'
-#              , format=1)
+st = \
+    SpeciesTree('(SE001:60.971176,(SE002:54.097175,((SE003:8.863838,SE013:8.7271048):33.859374,(((SE004:40.303116,(SE007:35.957807,(SE008:27.55188,(SE010:23.561527,SE011:23.148886):2.2511886):0.10991615):3.753085):7.938699,SE006:35.196556):7.992514,((SE005:16.104527,(SE014:1.9441679,SE015:3.2796744):19.411262):15.863363,(SE009:19.907848,SE012:39.749202):5.4071946):19.687332):3.7807204):17.137093):7.2302568):0;'
+                )
+gt = \
+    GeneTree('(SE001,(SE002,((((SE004,(SE007,(SE008,SE010))),SE006),((SE004,(SE007,(SE008,(SE008,SE010))[&&NHX:D=Y])),SE006))[&&NHX:D=Y],(((SE005,(SE014,SE015)),(SE009,SE012)),(SE005,(SE009,SE012)))[&&NHX:D=Y])));'
+             , format=1)
+
 # gt._get_species_subtree(st)
 
 # for node in gt.traverse():
@@ -499,58 +436,18 @@ class SpeciesTree(ete2.Tree):
 #         print 'SUBTREE\n', node._species_subtree
 
 # st.display_with_gene_tree(gt)
-
-st = SpeciesTree(open(sys.argv[1]).read(), format=1)
-st2 = SpeciesTree(open(sys.argv[1]).read(), format=1)
-gt = GeneTree(open(sys.argv[2]).read(), format=1)
-if not '[&&NHX' in open(sys.argv[2]).read():
-    gt.get_descendant_evol_events()
+if len(sys.argv) > 1:
+    st = SpeciesTree(open(sys.argv[1]).read(), format=1)
+    gt = GeneTree(open(sys.argv[2]).read(), format=1)
+    if not '[&&NHX' in open(sys.argv[2]).read():
+        gt.get_descendant_evol_events()
 
 # st.display_with_gene_tree(gt)
 # gt._just_gains(st)
-gt._get_species_subtree(st, verbose=False)
+
+gt._get_species_subtree(st, verbose=True)
 st._finalise_counts()
 
-# st.display_with_gene_tree(gt)
-# for node in gt.traverse('preorder'):
-#     new = node._species_subtree
-#     old = node._species_subtree_OLD
-#     mrca = st._find_mrca(node._taxon_set)
-#     if new != old:
-#         print 'NEW != OLD'
-#         print 'NODE\n', node
-#         print 'NEW SUBTREE\n', node._species_subtree
-#         print 'OLD SUBTREE\n', node._species_subtree_OLD
-#         print 'MRCA SUBTREE\n', st._find_mrca(node._taxon_set)
-#         print
-#         print
-#         print
-#     elif new != mrca:
-
-#         # st.display_with_gene_tree(gt)
-
-#         print 'NEW != MRCA'
-#         print 'NODE\n', node
-#         print 'NEW SUBTREE\n', node._species_subtree
-#         print 'OLD SUBTREE\n', node._species_subtree_OLD
-#         print 'MRCA SUBTREE\n', st._find_mrca(node._taxon_set)
-#         print
-#         print
-#         print
-#     elif mrca != old:
-
-#         # st.display_with_gene_tree(gt)
-
-#         print 'MRCA != OLD'
-#         print 'NODE\n', node
-#         print 'NEW SUBTREE\n', node._species_subtree
-#         print 'OLD SUBTREE\n', node._species_subtree_OLD
-#         print 'MRCA SUBTREE\n', st._find_mrca(node._taxon_set)
-#         print
-#         print
-#         print
-
-#         # st.display_with_gene_tree(gt)
 
 for node in st.iter_leaves():
     print node.name, node._count, \
@@ -559,7 +456,7 @@ for node in st.iter_leaves():
         assert node._count == list(gt.get_species()).count(node.name)
     except:
         print 'AssertionError'
-        break
+
 
         # print sys.argv[2]
         # print node.name, node._count, \
@@ -568,6 +465,7 @@ for node in st.iter_leaves():
         # st.display_with_gene_tree(gt)
 
 # st.display_with_gene_tree(gt)
+
 gt._just_gains(st)
 for node in st.traverse():
     print node._gains, node._justgains
@@ -575,4 +473,6 @@ for node in st.traverse():
         assert node._gains == node._justgains
     except:
         print 'AssertionError'
-        break
+
+
+st.display_with_gene_tree(gt)

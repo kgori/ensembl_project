@@ -1,0 +1,87 @@
+Synthetic evolution
+-------------------
+
+first organism (artificial sequences): 20 proteins with 100 aa (average)
+height of tree: 2.96, Speciations: 57
+Gene duplication rate: 0.01, transloc. Dupl.: 0.00
+Gene loss rate: 0.01
+
+
+something interesting is happening here...
+time 0.0000: speciation event of organism 1 to organism 2
+time 0.3000: speciation event of organism 1 to organism 3
+time 0.4000: speciation event of organism 1 to organism 4
+time 0.6000: speciation event of organism 1 to organism 5
+time 1.1267: speciation event of organism 1 to organism 6
+time 1.2000: speciation event of organism 5 to organism 7
+time 1.6534: speciation event of organism 1 to organism 8
+time 1.8013: speciation event of organism 8 to organism 9
+time 1.8091: speciation event of organism 1 to organism 10
+time 1.9641: speciation event of organism 8 to organism 11
+time 1.9647: speciation event of organism 1 to organism 12
+time 2.1270: speciation event of organism 8 to organism 13
+time 2.1371: speciation event of organism 1 to organism 14
+time 2.1861: speciation event of organism 13 to organism 15
+time 2.2422: speciation event of organism 14 to organism 16
+time 2.2466: speciation event of organism 1 to organism 17
+time 2.3183: speciation event of organism 1 to organism 18
+time 2.3221: speciation event of organism 8 to organism 19
+performing gene duplication of 3 genes
+time 2.3268: gene duplication in organism 12 with gene 14, now gene 21
+time 2.3268: gene duplication in organism 12 with gene 15, now gene 22
+time 2.3268: gene duplication in organism 12 with gene 16, now gene 23
+performing gene duplication of 1 genes
+time 2.4185: gene duplication in organism 17 with gene 3, now gene 24
+time 2.4415: speciation event of organism 14 to organism 20
+time 2.4829: speciation event of organism 20 to organism 21
+k: 0, nloss: 1
+time 2.5175: gene loss in organism 18 with gene 15
+time 2.5334: speciation event of organism 18 to organism 22
+time 2.3908: deletion of length 7 in org/gene 1/7
+time 2.5530: speciation event of organism 1 to organism 23
+time 2.5544: speciation event of organism 22 to organism 24
+time 2.5597: speciation event of organism 23 to organism 25
+performing gene duplication of 3 genes
+time 2.5621: gene duplication in organism 22 with gene 11, now gene 25
+time 2.5621: gene duplication in organism 22 with gene 12, now gene 26
+time 2.5621: gene duplication in organism 22 with gene 13, now gene 27
+time 2.5767: speciation event of organism 1 to organism 26
+time 2.5973: speciation event of organism 1 to organism 27
+time 2.5979: speciation event of organism 26 to organism 28
+time 2.6022: speciation event of organism 1 to organism 29
+time 2.6094: speciation event of organism 23 to organism 30
+time 2.6096: speciation event of organism 26 to organism 31
+time 2.6126: speciation event of organism 27 to organism 32
+time 2.6129: speciation event of organism 25 to organism 33
+time 2.6141: speciation event of organism 31 to organism 34
+time 2.6177: speciation event of organism 1 to organism 35
+time 2.6203: speciation event of organism 31 to organism 36
+time 2.6287: speciation event of organism 1 to organism 37
+time 2.6297: speciation event of organism 26 to organism 38
+time 2.6364: speciation event of organism 23 to organism 39
+time 2.6383: speciation event of organism 27 to organism 40
+time 2.6478: speciation event of organism 34 to organism 41
+time 2.6485: speciation event of organism 27 to organism 42
+time 2.6499: speciation event of organism 26 to organism 43
+time 2.6531: speciation event of organism 35 to organism 44
+time 2.6543: speciation event of organism 28 to organism 45
+time 2.6701: speciation event of organism 36 to organism 46
+time 2.6715: speciation event of organism 27 to organism 47
+time 2.6750: speciation event of organism 43 to organism 48
+time 2.6863: speciation event of organism 1 to organism 49
+time 2.7083: speciation event of organism 1 to organism 50
+time 2.7140: speciation event of organism 32 to organism 51
+time 2.7155: speciation event of organism 1 to organism 52
+time 2.7214: speciation event of organism 46 to organism 53
+time 2.7226: speciation event of organism 1 to organism 54
+time 2.7323: speciation event of organism 1 to organism 55
+time 2.7346: speciation event of organism 1 to organism 56
+performing gene duplication of 1 genes
+time 2.7590: gene duplication in organism 34 with gene 14, now gene 28
+time 2.8692: speciation event of organism 27 to organism 57
+time 2.8257: insertion of length 2 in org/gene 32/1
+
+
+
+1145 genes in 57 species generated
+4 gene duplications resulting in 8 genes
